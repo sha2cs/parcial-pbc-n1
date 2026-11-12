@@ -28,7 +28,7 @@ La aplicación terminada debe tener, **como mínimo**, lo que muestra esta image
 ## Contenido
 
 0. [Preparación del repositorio](#0-preparación-del-repositorio)
-1. [Instalación de herramientas](#1-instalación-de-herramientas)
+1. [Versión de Node.js](#1-versión-de-nodejs)
 2. [Instalación de dependencias y ejecución](#2-instalación-de-dependencias-y-ejecución)
 3. [Estructura de un proyecto Angular 21](#3-estructura-de-un-proyecto-angular-21)
 4. [Limpieza de la página inicial y estilos globales](#4-limpieza-de-la-página-inicial-y-estilos-globales)
@@ -76,66 +76,39 @@ Verificación: `git branch` muestra un asterisco junto a la rama nueva.
 
 ---
 
-## 1. Instalación de herramientas
+## 1. Versión de Node.js
 
-### 1.1 Node.js
-
-Angular 21 requiere **Node.js 20.19 o superior, 22.12 o superior, o 24 en adelante**. La versión recomendada es la **LTS** publicada en <https://nodejs.org>.
+Angular 21 requiere **Node.js 20.19 o superior, 22.12 o superior, o 24 en adelante**. La versión se administra con **nvm**, ya instalado en clase.
 
 Verificación:
 
 ```bash
 node -v
-npm -v
 ```
 
-Salida esperada (los números pueden variar):
+Si la versión no está en ese rango, se instala y se activa la 24 con nvm:
+
+```bash
+nvm install 24
+nvm use 24
+node -v
+```
+
+Salida esperada del último comando (los números finales pueden variar):
 
 ```
 v24.x.x
-11.x.x
 ```
 
-### 1.2 Angular CLI 21
-
-El CLI (*Command Line Interface*) es la herramienta que genera componentes y ejecuta el servidor de desarrollo. Se instala de forma global y **fijando la versión 21**:
-
-```bash
-npm install -g @angular/cli@21
-```
-
-Verificación:
-
-```bash
-ng version
-```
-
-La salida debe incluir una línea como esta:
-
-```
-Angular CLI       : 21.2.x
-```
-
-> En Windows, si PowerShell responde *«la ejecución de scripts está deshabilitada en este sistema»*, ver la sección [Problemas frecuentes](#15-problemas-frecuentes).
+> No se instala el Angular CLI de forma global. El proyecto ya trae el **CLI 21** entre sus dependencias, y los comandos de este tutorial lo usan a través de `npm` y `npx`. Así, todos trabajan con la misma versión.
 
 ---
 
 ## 2. Instalación de dependencias y ejecución
 
-Este repositorio **ya es un proyecto Angular 21 base**, sin modificar. Se generó con el comando:
+Este repositorio **ya es un proyecto Angular 21**: el fork y el clon traen todo lo necesario, menos la carpeta `node_modules` (las dependencias), que no viaja en el repositorio.
 
-```bash
-ng new parcial-pbc-n1 --defaults --ssr=false --style=css --skip-git
-```
-
-| Opción | Significado |
-|---|---|
-| `--defaults` | Acepta las respuestas por defecto, sin preguntas interactivas |
-| `--ssr=false` | Sin renderizado en servidor: el proyecto es una SPA pura |
-| `--style=css` | Los estilos se escriben en CSS plano |
-| `--skip-git` | No crea un repositorio Git, porque el proyecto se publica en uno existente |
-
-La carpeta `node_modules` (las dependencias) **no viaja en el repositorio**. Se instala desde la raíz del repositorio clonado (`parcial-pbc-n1`):
+Desde la raíz del repositorio clonado (`parcial-pbc-n1`):
 
 ```bash
 npm install
@@ -146,16 +119,17 @@ La instalación tarda varios minutos y termina sin errores (puede mostrar avisos
 Ejecución del servidor de desarrollo:
 
 ```bash
-ng serve
+npm start
 ```
 
 ```
+> ng serve
   ➜  Local:   http://localhost:4200/
 ```
 
 Al abrir `http://localhost:4200/` aparece la página de bienvenida de Angular. El servidor queda **encendido** y recarga el navegador cada vez que se guarda un archivo. Se detiene con `Ctrl + C`.
 
-> 💡 Conviene dejar `ng serve` en una terminal y abrir **otra terminal**, en la misma carpeta, para los comandos siguientes.
+> 💡 Conviene dejar `npm start` en una terminal y abrir **otra terminal**, en la misma carpeta, para los comandos siguientes.
 
 ---
 
@@ -242,14 +216,14 @@ El nombre del archivo debe coincidir **exactamente** con el valor de la propieda
 Desde la raíz del repositorio, un comando por componente:
 
 ```bash
-ng generate component encabezado
-ng generate component sobre-mi
-ng generate component editar-perfil
-ng generate component cancion-favorita
-ng generate component contacto
+npx ng generate component encabezado
+npx ng generate component sobre-mi
+npx ng generate component editar-perfil
+npx ng generate component cancion-favorita
+npx ng generate component contacto
 ```
 
-Forma abreviada equivalente: `ng g c encabezado`.
+Forma abreviada equivalente: `npx ng g c encabezado`.
 
 Cada comando crea una carpeta con cuatro archivos:
 
@@ -722,7 +696,7 @@ export class App {}
 
 **Funcionamiento:** cada etiqueta `<app-…>` corresponde al `selector` de un componente. Para que Angular la reconozca, la clase del componente debe estar en el arreglo `imports` de `App`. Si falta, el error es `'app-encabezado' is not a known element`.
 
-Con `ng serve` encendido, el navegador muestra la página completa de la sección [Resultado mínimo esperado](#resultado-mínimo-esperado).
+Con `npm start` encendido, el navegador muestra la página completa de la sección [Resultado mínimo esperado](#resultado-mínimo-esperado).
 
 ---
 
@@ -746,7 +720,7 @@ Una entrega con los datos de *Ana María Pérez* se considera copia del tutorial
 Desde la raíz del repositorio, la compilación debe terminar sin errores:
 
 ```bash
-ng build
+npm run build
 ```
 
 ```
@@ -786,7 +760,7 @@ git push -u origin anaperez
 
 ## 14. Lista de verificación
 
-- [ ] `ng version` muestra Angular CLI **21**.
+- [ ] `npx ng version` muestra Angular CLI **21**.
 - [ ] Existen los cinco componentes: `encabezado`, `sobre-mi`, `editar-perfil`, `cancion-favorita`, `contacto`.
 - [ ] El encabezado muestra los datos propios con interpolación.
 - [ ] La foto se muestra con `[src]` y el botón **Ver más / Ver menos** funciona.
@@ -795,7 +769,7 @@ git push -u origin anaperez
 - [ ] El botón **Enviar** está deshabilitado con el formulario incompleto.
 - [ ] El error del correo aparece solo con un correo inválido.
 - [ ] Al enviar, aparece el mensaje de agradecimiento con el nombre y el formulario se limpia.
-- [ ] `ng build` termina sin errores.
+- [ ] `npm run build` termina sin errores.
 - [ ] El pull request sale de la rama `nombreapellido` hacia `sha2cs/parcial-pbc-n1:main`.
 - [ ] `node_modules` no está en el repositorio.
 
@@ -805,11 +779,10 @@ git push -u origin anaperez
 
 | Síntoma | Causa | Solución |
 |---|---|---|
-| PowerShell: *«la ejecución de scripts está deshabilitada en este sistema»* al ejecutar `ng` | Política de ejecución de Windows | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`, o usar **CMD** / **Git Bash** |
-| `ng: command not found` / *«ng no se reconoce como un comando»* | El CLI no quedó instalado de forma global | Repetir `npm install -g @angular/cli@21` y abrir una terminal nueva |
-| `ng version` muestra una versión distinta de 21 | Había otro CLI instalado | `npm uninstall -g @angular/cli` y luego `npm install -g @angular/cli@21` |
-| `Node.js version vXX is not supported` | Node.js fuera del rango soportado | Instalar la versión LTS de <https://nodejs.org> |
-| `Port 4200 is already in use` | Ya hay un `ng serve` corriendo | Cerrar la otra terminal o usar `ng serve --port 4201` |
+| PowerShell: *«la ejecución de scripts está deshabilitada en este sistema»* al ejecutar `npm` o `npx` | Política de ejecución de Windows | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`, o usar **CMD** / **Git Bash** |
+| `npm start` falla con *«ng no se reconoce»* o *«Cannot find module»* | Faltan las dependencias | Ejecutar `npm install` en la raíz del repositorio (paso 2) |
+| `Node.js version vXX is not supported` | Versión de Node.js fuera del rango | `nvm install 24` y `nvm use 24` (paso 1) |
+| `Port 4200 is already in use` | Ya hay un `npm start` corriendo | Cerrar la otra terminal o usar `npm start -- --port 4201` |
 | `Can't bind to 'ngModel'…` | Falta `FormsModule` en `imports` | Agregar `FormsModule` en el componente (pasos 8 y 10) |
 | `'app-…' is not a known element` | El componente no está en `imports` de `App` | Revisar el paso 11 |
 | La foto no aparece | El archivo no está en `public/` o el nombre no coincide con la propiedad `foto` | Revisar el paso 4.3 |

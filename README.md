@@ -5,20 +5,21 @@ Programación Basada en Componentes · Grupo N1 · 2026B
 
 Construcción de una **SPA (Single Page Application)** de presentación personal con **Angular 21**, desde la instalación de las herramientas hasta la entrega por *pull request*.
 
-El proyecto cubre cuatro temas:
+El proyecto cubre estos temas:
 
 | Tema | Dónde se aplica |
 |---|---|
 | Interpolación `{{ }}` | Componente `encabezado` |
 | Property binding `[ ]` y event binding `( )` | Componente `sobre-mi` |
 | Two-way binding `[(ngModel)]` | Componente `editar-perfil` |
+| Interpolación y property binding sobre un enlace `[href]` | Componente `cancion-favorita` |
 | Formulario con `ngForm` y validaciones | Componente `contacto` |
 
 ---
 
 ## Resultado mínimo esperado
 
-La aplicación terminada debe tener, **como mínimo**, lo que muestra esta imagen: los cuatro bloques y su funcionamiento. Todo ocurre en una sola página y el navegador no la recarga en ningún momento. Se admite mejorar el diseño o agregar contenido, siempre que se conserve lo mínimo.
+La aplicación terminada debe tener, **como mínimo**, lo que muestra esta imagen: los cinco bloques y su funcionamiento. Todo ocurre en una sola página y el navegador no la recarga en ningún momento. Se admite mejorar el diseño o agregar contenido, siempre que se conserve lo mínimo.
 
 ![Portafolio terminado](img/01-completo.png)
 
@@ -35,12 +36,13 @@ La aplicación terminada debe tener, **como mínimo**, lo que muestra esta image
 6. [Componente `encabezado`: interpolación](#6-componente-encabezado-interpolación)
 7. [Componente `sobre-mi`: property binding y event binding](#7-componente-sobre-mi-property-binding-y-event-binding)
 8. [Componente `editar-perfil`: two-way binding](#8-componente-editar-perfil-two-way-binding)
-9. [Componente `contacto`: formulario con `ngForm`](#9-componente-contacto-formulario-con-ngform)
-10. [Ensamble de la página en `app`](#10-ensamble-de-la-página-en-app)
-11. [Personalización obligatoria](#11-personalización-obligatoria)
-12. [Entrega por pull request](#12-entrega-por-pull-request)
-13. [Lista de verificación](#13-lista-de-verificación)
-14. [Problemas frecuentes](#14-problemas-frecuentes)
+9. [Componente `cancion-favorita`: enlace con property binding](#9-componente-cancion-favorita-enlace-con-property-binding)
+10. [Componente `contacto`: formulario con `ngForm`](#10-componente-contacto-formulario-con-ngform)
+11. [Ensamble de la página en `app`](#11-ensamble-de-la-página-en-app)
+12. [Personalización obligatoria](#12-personalización-obligatoria)
+13. [Entrega por pull request](#13-entrega-por-pull-request)
+14. [Lista de verificación](#14-lista-de-verificación)
+15. [Problemas frecuentes](#15-problemas-frecuentes)
 
 ---
 
@@ -114,7 +116,7 @@ La salida debe incluir una línea como esta:
 Angular CLI       : 21.2.x
 ```
 
-> En Windows, si PowerShell responde *«la ejecución de scripts está deshabilitada en este sistema»*, ver la sección [Problemas frecuentes](#14-problemas-frecuentes).
+> En Windows, si PowerShell responde *«la ejecución de scripts está deshabilitada en este sistema»*, ver la sección [Problemas frecuentes](#15-problemas-frecuentes).
 
 ---
 
@@ -189,7 +191,7 @@ Dos rasgos de Angular 21 que difieren de versiones anteriores y de muchos tutori
 
 ### 4.1 `src/app/app.html`
 
-El archivo trae la página de bienvenida (más de 300 líneas). **Se borra todo su contenido** y se deja vacío por ahora; se completa en el paso 10.
+El archivo trae la página de bienvenida (más de 300 líneas). **Se borra todo su contenido** y se deja vacío por ahora; se completa en el paso 11.
 
 ### 4.2 `src/styles.css`
 
@@ -243,6 +245,7 @@ Desde la raíz del repositorio, un comando por componente:
 ng generate component encabezado
 ng generate component sobre-mi
 ng generate component editar-perfil
+ng generate component cancion-favorita
 ng generate component contacto
 ```
 
@@ -488,7 +491,82 @@ label {
 
 ---
 
-## 9. Componente `contacto`: formulario con `ngForm`
+## 9. Componente `cancion-favorita`: enlace con property binding
+
+Tarjeta con la canción favorita y un botón que abre la canción en **YouTube** o **Spotify**. Combina dos temas ya vistos:
+
+- **Interpolación** para el título, el artista y el motivo.
+- **Property binding** `[href]="enlace"`: la dirección del enlace sale de una propiedad de la clase, igual que `[src]` en el paso 7.
+
+![Canción favorita](img/09-cancion-favorita.png)
+
+### `src/app/cancion-favorita/cancion-favorita.ts`
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-cancion-favorita',
+  imports: [],
+  templateUrl: './cancion-favorita.html',
+  styleUrl: './cancion-favorita.css',
+})
+export class CancionFavorita {
+  titulo = 'La gota fría';
+  artista = 'Carlos Vives';
+  motivo = 'Me recuerda los paseos en familia.';
+  enlace = 'https://www.youtube.com/results?search_query=la+gota+fria+carlos+vives';
+}
+```
+
+### `src/app/cancion-favorita/cancion-favorita.html`
+
+```html
+<section class="tarjeta">
+  <h2>Mi canción favorita</h2>
+  <p class="titulo">🎵 {{ titulo }}</p>
+  <p>{{ artista }}</p>
+  <p><em>{{ motivo }}</em></p>
+  <a [href]="enlace" target="_blank">Escuchar</a>
+</section>
+```
+
+### `src/app/cancion-favorita/cancion-favorita.css`
+
+```css
+.titulo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+a {
+  display: inline-block;
+  background: #c0392b;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+}
+```
+
+**Funcionamiento:**
+
+1. `[href]="enlace"` asigna al enlace la dirección guardada en la propiedad `enlace`.
+2. `target="_blank"` abre la canción en una pestaña nueva, para que el portafolio siga abierto.
+3. El enlace de ejemplo es una búsqueda de YouTube. En la entrega va el enlace **directo** a la canción elegida.
+
+**Obtención del enlace:**
+
+| Plataforma | Pasos |
+|---|---|
+| YouTube | Abrir el video → **Compartir** → **Copiar**. Ejemplo de forma: `https://youtu.be/XXXXXXXXXXX` |
+| Spotify | Abrir la canción → **⋯** → **Compartir** → **Copiar enlace de la canción**. Ejemplo de forma: `https://open.spotify.com/track/XXXXXXXX` |
+
+El enlace copiado se pega como valor de la propiedad `enlace`, entre comillas simples.
+
+---
+
+## 10. Componente `contacto`: formulario con `ngForm`
 
 Al importar `FormsModule`, Angular convierte cada etiqueta `<form>` en un objeto **`NgForm`**, que lleva el control del formulario completo: valores, validez y si fue tocado.
 
@@ -604,9 +682,9 @@ El mensaje de error del correo aparece solo cuando el campo es inválido **y** y
 
 ---
 
-## 10. Ensamble de la página en `app`
+## 11. Ensamble de la página en `app`
 
-El componente raíz `App` reúne los cuatro componentes.
+El componente raíz `App` reúne los cinco componentes.
 
 ### `src/app/app.ts`
 
@@ -617,11 +695,12 @@ import { Component } from '@angular/core';
 import { Encabezado } from './encabezado/encabezado';
 import { SobreMi } from './sobre-mi/sobre-mi';
 import { EditarPerfil } from './editar-perfil/editar-perfil';
+import { CancionFavorita } from './cancion-favorita/cancion-favorita';
 import { Contacto } from './contacto/contacto';
 
 @Component({
   selector: 'app-root',
-  imports: [Encabezado, SobreMi, EditarPerfil, Contacto],
+  imports: [Encabezado, SobreMi, EditarPerfil, CancionFavorita, Contacto],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -636,6 +715,7 @@ export class App {}
 <main>
   <app-sobre-mi />
   <app-editar-perfil />
+  <app-cancion-favorita />
   <app-contacto />
 </main>
 ```
@@ -646,19 +726,20 @@ Con `ng serve` encendido, el navegador muestra la página completa de la secció
 
 ---
 
-## 11. Personalización obligatoria
+## 12. Personalización obligatoria
 
 El código de este tutorial usa datos de ejemplo. **La entrega debe contener los datos propios del estudiante**, como mínimo:
 
 - [ ] `encabezado.ts`: nombre, carrera, semestre y ciudad propios.
 - [ ] `sobre-mi.ts`: `resumen` y `detalle` escritos por el estudiante.
 - [ ] `editar-perfil.ts`: apodo, lenguaje y color iniciales propios.
+- [ ] `cancion-favorita.ts`: canción, artista, motivo y enlace propios.
 
 Una entrega con los datos de *Ana María Pérez* se considera copia del tutorial.
 
 ---
 
-## 12. Entrega por pull request
+## 13. Entrega por pull request
 
 ### 12.1 Verificación previa
 
@@ -703,13 +784,14 @@ git push -u origin anaperez
 
 ---
 
-## 13. Lista de verificación
+## 14. Lista de verificación
 
 - [ ] `ng version` muestra Angular CLI **21**.
-- [ ] Existen los cuatro componentes: `encabezado`, `sobre-mi`, `editar-perfil`, `contacto`.
+- [ ] Existen los cinco componentes: `encabezado`, `sobre-mi`, `editar-perfil`, `cancion-favorita`, `contacto`.
 - [ ] El encabezado muestra los datos propios con interpolación.
 - [ ] La foto se muestra con `[src]` y el botón **Ver más / Ver menos** funciona.
 - [ ] La tarjeta de `editar-perfil` cambia en vivo al escribir y al cambiar el color.
+- [ ] El botón **Escuchar** abre la canción propia en YouTube o Spotify, en una pestaña nueva.
 - [ ] El botón **Enviar** está deshabilitado con el formulario incompleto.
 - [ ] El error del correo aparece solo con un correo inválido.
 - [ ] Al enviar, aparece el mensaje de agradecimiento con el nombre y el formulario se limpia.
@@ -719,7 +801,7 @@ git push -u origin anaperez
 
 ---
 
-## 14. Problemas frecuentes
+## 15. Problemas frecuentes
 
 | Síntoma | Causa | Solución |
 |---|---|---|
@@ -728,8 +810,8 @@ git push -u origin anaperez
 | `ng version` muestra una versión distinta de 21 | Había otro CLI instalado | `npm uninstall -g @angular/cli` y luego `npm install -g @angular/cli@21` |
 | `Node.js version vXX is not supported` | Node.js fuera del rango soportado | Instalar la versión LTS de <https://nodejs.org> |
 | `Port 4200 is already in use` | Ya hay un `ng serve` corriendo | Cerrar la otra terminal o usar `ng serve --port 4201` |
-| `Can't bind to 'ngModel'…` | Falta `FormsModule` en `imports` | Agregar `FormsModule` en el componente (pasos 8 y 9) |
-| `'app-…' is not a known element` | El componente no está en `imports` de `App` | Revisar el paso 10 |
+| `Can't bind to 'ngModel'…` | Falta `FormsModule` en `imports` | Agregar `FormsModule` en el componente (pasos 8 y 10) |
+| `'app-…' is not a known element` | El componente no está en `imports` de `App` | Revisar el paso 11 |
 | La foto no aparece | El archivo no está en `public/` o el nombre no coincide con la propiedad `foto` | Revisar el paso 4.3 |
 | `fatal: not a git repository` | El comando se ejecutó fuera del repositorio | Volver a la carpeta `parcial-pbc-n1` |
-| El pull request apunta al fork propio y no a `sha2cs` | Base repository mal seleccionado | En el paso 12.3, cambiar **base repository** a `sha2cs/parcial-pbc-n1` |
+| El pull request apunta al fork propio y no a `sha2cs` | Base repository mal seleccionado | En el paso 13.3, cambiar **base repository** a `sha2cs/parcial-pbc-n1` |

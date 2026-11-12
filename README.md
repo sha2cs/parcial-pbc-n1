@@ -78,15 +78,11 @@ Verificación: `git branch` muestra un asterisco junto a la rama nueva.
 
 ## 1. Versión de Node.js
 
-Angular 21 requiere **Node.js 20.19 o superior, 22.12 o superior, o 24 en adelante**. La versión se administra con **nvm**, ya instalado en clase.
+**Versión obligatoria: Node.js 24.**
 
-Verificación:
+Angular 21 soporta oficialmente las versiones **20, 22 y 24** de Node.js. La versión más reciente de Node.js (la 26) funciona, pero Angular 21 la marca como **no soportada**. La 24 es la versión LTS más nueva que Angular 21 soporta, y es la que se usa en este parcial.
 
-```bash
-node -v
-```
-
-Si la versión no está en ese rango, se instala y se activa la 24 con nvm:
+La versión se administra con **nvm**, ya instalado en clase:
 
 ```bash
 nvm install 24
@@ -94,13 +90,30 @@ nvm use 24
 node -v
 ```
 
-Salida esperada del último comando (los números finales pueden variar):
+Salida esperada del último comando (los números después de `24` pueden variar):
 
 ```
 v24.x.x
 ```
 
 > No se instala el Angular CLI de forma global. El proyecto ya trae el **CLI 21** entre sus dependencias, y los comandos de este tutorial lo usan a través de `npm` y `npx`. Así, todos trabajan con la misma versión.
+
+La validación completa se hace **después del paso 2** (cuando ya están instaladas las dependencias), con:
+
+```bash
+npx ng version
+```
+
+La salida debe mostrar estas dos líneas, **sin** la palabra `Unsupported`:
+
+```
+Angular CLI       : 21.2.x
+Node.js           : 24.x.x
+```
+
+Si la línea de Node.js dice `(Unsupported)`, la versión activa no es la correcta: repetir `nvm use 24` y volver a ejecutar `npx ng version`.
+
+> ⚠️ `nvm use 24` aplica a la terminal abierta. En Windows, con nvm-windows, el cambio es global; en Linux y macOS, cada terminal nueva requiere `nvm use 24` si la 24 no es la versión por defecto (`nvm alias default 24` la deja fija).
 
 ---
 
@@ -715,19 +728,7 @@ Una entrega con los datos de *Ana María Pérez* se considera copia del tutorial
 
 ## 13. Entrega por pull request
 
-### 12.1 Verificación previa
-
-Desde la raíz del repositorio, la compilación debe terminar sin errores:
-
-```bash
-npm run build
-```
-
-```
-Application bundle generation complete.
-```
-
-### 12.2 Commit y push
+### 13.1 Commit y push
 
 Desde la raíz del repositorio:
 
@@ -735,7 +736,7 @@ Desde la raíz del repositorio:
 git status
 ```
 
-`git status` debe listar los archivos modificados y la carpeta de cada componente nuevo dentro de `src/app/`. Las carpetas `node_modules` y `dist` **no** deben aparecer: el archivo `.gitignore` del proyecto las excluye.
+`git status` debe listar los archivos modificados y la carpeta de cada componente nuevo dentro de `src/app/`. La carpeta `node_modules` **no** debe aparecer: el archivo `.gitignore` del proyecto las excluye.
 
 ```bash
 git add .
@@ -745,7 +746,7 @@ git push -u origin anaperez
 
 (Con el nombre de la rama propia en lugar de `anaperez`.)
 
-### 12.3 Pull request
+### 13.2 Pull request
 
 1. En el fork (`https://github.com/<usuario>/parcial-pbc-n1`) aparece el aviso **«anaperez had recent pushes»** con el botón **Compare & pull request**.
 2. Verificar en la parte superior:
@@ -760,7 +761,7 @@ git push -u origin anaperez
 
 ## 14. Lista de verificación
 
-- [ ] `npx ng version` muestra Angular CLI **21**.
+- [ ] `npx ng version` muestra Angular CLI **21** y Node.js **24**, sin `Unsupported`.
 - [ ] Existen los cinco componentes: `encabezado`, `sobre-mi`, `editar-perfil`, `cancion-favorita`, `contacto`.
 - [ ] El encabezado muestra los datos propios con interpolación.
 - [ ] La foto se muestra con `[src]` y el botón **Ver más / Ver menos** funciona.
@@ -769,7 +770,7 @@ git push -u origin anaperez
 - [ ] El botón **Enviar** está deshabilitado con el formulario incompleto.
 - [ ] El error del correo aparece solo con un correo inválido.
 - [ ] Al enviar, aparece el mensaje de agradecimiento con el nombre y el formulario se limpia.
-- [ ] `npm run build` termina sin errores.
+- [ ] `npm start` levanta la aplicación sin errores en la terminal.
 - [ ] El pull request sale de la rama `nombreapellido` hacia `sha2cs/parcial-pbc-n1:main`.
 - [ ] `node_modules` no está en el repositorio.
 
@@ -781,10 +782,10 @@ git push -u origin anaperez
 |---|---|---|
 | PowerShell: *«la ejecución de scripts está deshabilitada en este sistema»* al ejecutar `npm` o `npx` | Política de ejecución de Windows | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`, o usar **CMD** / **Git Bash** |
 | `npm start` falla con *«ng no se reconoce»* o *«Cannot find module»* | Faltan las dependencias | Ejecutar `npm install` en la raíz del repositorio (paso 2) |
-| `Node.js version vXX is not supported` | Versión de Node.js fuera del rango | `nvm install 24` y `nvm use 24` (paso 1) |
+| `npx ng version` muestra `Node.js … (Unsupported)` | Versión de Node.js distinta de la 24 | `nvm install 24` y `nvm use 24` (paso 1) |
 | `Port 4200 is already in use` | Ya hay un `npm start` corriendo | Cerrar la otra terminal o usar `npm start -- --port 4201` |
 | `Can't bind to 'ngModel'…` | Falta `FormsModule` en `imports` | Agregar `FormsModule` en el componente (pasos 8 y 10) |
 | `'app-…' is not a known element` | El componente no está en `imports` de `App` | Revisar el paso 11 |
 | La foto no aparece | El archivo no está en `public/` o el nombre no coincide con la propiedad `foto` | Revisar el paso 4.3 |
 | `fatal: not a git repository` | El comando se ejecutó fuera del repositorio | Volver a la carpeta `parcial-pbc-n1` |
-| El pull request apunta al fork propio y no a `sha2cs` | Base repository mal seleccionado | En el paso 13.3, cambiar **base repository** a `sha2cs/parcial-pbc-n1` |
+| El pull request apunta al fork propio y no a `sha2cs` | Base repository mal seleccionado | En el paso 13.2, cambiar **base repository** a `sha2cs/parcial-pbc-n1` |

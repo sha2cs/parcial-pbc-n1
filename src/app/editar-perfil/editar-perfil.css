@@ -1,0 +1,13 @@
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+.vista-previa {
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

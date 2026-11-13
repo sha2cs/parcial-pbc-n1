@@ -1,0 +1,20 @@
+<section class="tarjeta">
+  <h2>Mi tarjeta</h2>
+
+  <label>Apodo:
+    <input type="text" [(ngModel)]="apodo">
+  </label>
+
+  <label>Lenguaje favorito:
+    <input type="text" [(ngModel)]="lenguaje">
+  </label>
+
+  <label>Color favorito:
+    <input type="color" [(ngModel)]="color">
+  </label>
+
+  <div class="vista-previa" [style.background-color]="color">
+    <strong>{{ apodo }}</strong>
+    <span>programa en {{ lenguaje }}</span>
+  </div>
+</section>

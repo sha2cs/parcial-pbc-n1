@@ -1,0 +1,16 @@
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+.error {
+  color: #c0392b;
+}
+.exito {
+  color: #1e8449;
+  font-weight: bold;
+}

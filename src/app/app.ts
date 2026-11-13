@@ -1,12 +1,14 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { Encabezado } from './encabezado/encabezado';
+import { SobreMi } from './sobre-mi/sobre-mi';
+import { EditarPerfil } from './editar-perfil/editar-perfil';
+import { CancionFavorita } from './cancion-favorita/cancion-favorita';
+import { Contacto } from './contacto/contacto';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [Encabezado, SobreMi, EditarPerfil, CancionFavorita, Contacto],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('parcial-pbc-n1');
-}
+export class App {}

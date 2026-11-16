@@ -1,0 +1,13 @@
+
+<section class="tarjeta">
+  <h2>Mi canción favorita</h2>
+  <p class="titulo">🎵 {{ titulo }}</p>
+  <p>{{ artista }}</p>
+  <p><em>{{ motivo }}</em></p>
+
+  <audio controls class="reproductor">
+    <source [src]="archivoAudio" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+  
+</section>

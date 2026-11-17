@@ -1,0 +1,42 @@
+<section class="tarjeta">
+  <h2>Mi canción favorita</h2>
+  <p class="titulo"> {{ titulo }}</p>
+  <p>{{ artista }}</p>
+  <p><em>{{ motivo }}</em></p>
+
+  <div class="botones-grupo">
+    <button class="btn-youtube" (click)="seleccionarPlataforma('youtube')">
+      {{ plataformaActiva === 'youtube' ? 'Cerrar YouTube' : 'Ver video (YouTube)' }}
+    </button>
+
+    <button class="btn-spotify" (click)="seleccionarPlataforma('spotify')">
+      {{ plataformaActiva === 'spotify' ? 'Cerrar Spotify' : 'Escuchar audio (Spotify)' }}
+    </button>
+  </div>
+
+  @if (plataformaActiva === 'youtube') {
+    <div class="reproductor">
+      <iframe
+        class="iframe-youtube"
+        [src]="urlYoutubeSegura"
+        title="Reproductor de YouTube"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  }
+
+  @if (plataformaActiva === 'spotify') {
+    <div class="reproductor">
+      <iframe
+        class="iframe-spotify"
+        [src]="urlSpotifySegura"
+        title="Reproductor de Spotify"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
+    </div>
+  }
+</section>

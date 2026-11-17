@@ -1,0 +1,12 @@
+.encabezado {
+  background: #1e3a5f;
+  color: #ffffff;
+  text-align: center;
+  padding: 32px 16px;
+}
+.encabezado h1 {
+  margin: 0 0 8px;
+}
+.encabezado p {
+  margin: 4px 0;
+}

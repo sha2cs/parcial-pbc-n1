@@ -1,0 +1,57 @@
+.titulo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.botones-grupo {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  display: inline-block;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-youtube {
+  background: #c0392b;
+}
+
+.btn-youtube:hover {
+  background: #a93226;
+}
+
+.btn-spotify {
+  background: #1db954;
+}
+
+.btn-spotify:hover {
+  background: #1aa34a;
+}
+
+.reproductor {
+  margin-top: 16px;
+}
+
+.reproductor iframe {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+}
+
+.iframe-youtube {
+  height: 225px;
+}
+
+.iframe-spotify {
+  height: 152px;
+}

@@ -1,0 +1,38 @@
+<section class="tarjeta">
+  <h2>Mis 20 Canciones Favoritas</h2>
+  <p class="subtitulo">(son 423 para ser precisos, y probablemente mas, pero si no, no termino nunca esto jajajaja)</p>
+
+  <div class="lista-top">
+    @for (cancion of canciones; track cancion.titulo; let i = $index) {
+    <div class="item-cancion" [style.background]="cancion.color">
+      <div class="info">
+        <p class="titulo">#{{ i + 1 }} {{ cancion.titulo }}</p>
+        <p class="artista">{{ cancion.artista }}</p>
+        <p class="motivo"><em>{{ cancion.motivo }}</em></p>
+      </div>
+
+      <button
+        type="button"
+        class="btn-escuchar"
+        (click)="seleccionarCancion(i, cancion.spotifyId)">
+        {{ cancionActivaIndex === i ? 'Cerrar' : 'Escuchar' }}
+      </button>
+
+      @if (cancionActivaIndex === i && enlaceActual) {
+      <div class="reproductor">
+        <iframe
+          style="border-radius: 12px;"
+          [src]="enlaceActual"
+          width="100%"
+          height="152"
+          frameborder="0"
+          allowfullscreen
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy">
+        </iframe>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,25 @@
+<section class="tarjeta">
+  <h2>Contacto</h2>
+
+  <form #formulario="ngForm" (ngSubmit)="enviar(formulario)">
+    <label>Nombre:
+      <input type="text" name="nombre" [(ngModel)]="nombre" required>
+    </label>
+
+    <label>Correo:
+      <input type="email" name="correo" [(ngModel)]="correo" required email #campoCorreo="ngModel">
+    </label>
+    <p class="error" [hidden]="campoCorreo.valid || campoCorreo.untouched">
+      Escriba un correo válido.
+    </p>
+
+    <label>Mensaje:
+      <textarea name="mensaje" [(ngModel)]="mensaje" required minlength="10"></textarea>
+    </label>
+
+    <button type="submit" [disabled]="formulario.invalid">Enviar</button>
+    <p>¿Formulario válido? {{ formulario.valid }}</p>
+  </form>
+
+  <p class="exito" [hidden]="!enviado">¡Gracias, {{ nombreEnviado }}! Mensaje recibido.</p>
+</section>

@@ -1,0 +1,20 @@
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+input,
+textarea {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  box-sizing: border-box;
+}
+.error {
+  color: #c0392b;
+  font-size: 13px;
+}
+.exito {
+  color: #1e8449;
+  font-weight: bold;
+  margin-top: 12px;
+}

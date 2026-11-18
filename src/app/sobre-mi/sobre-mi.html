@@ -1,0 +1,9 @@
+<section class="tarjeta">
+  <h2>Sobre mí</h2>
+  <img [src]="foto" [alt]="descripcionFoto" width="120" height="120">
+  <p>{{ resumen }}</p>
+  <p [hidden]="!mostrarDetalle">{{ detalle }}</p>
+  <button (click)="alternarDetalle()">
+    {{ mostrarDetalle ? 'Ver menos' : 'Ver más' }}
+  </button>
+</section>
